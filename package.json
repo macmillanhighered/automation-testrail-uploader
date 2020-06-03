@@ -1,29 +1,34 @@
 {
-  "version": "0.0.1",
+  "name": "@nodebug/testrail-uploader",
+  "version": "1.0.1",
   "author": {
-    "name": "Thomas Ashwin DSilva",
-    "email": "thdsilva.qa@gmail.com"
+    "name": "Node Bug",
+    "email": "nodebug@outlook.com"
   },
   "bugs": {
-    "url": "https://github.com/thomasashwindsilva/boilerplatejs/issues"
+    "url": "https://github.com/node-bug/testrail-uploader/issues"
   },
   "dependencies": {
-    "@tapack/logger": "1.0.1",
-    "rc": "^1.2.8"
+    "@nodebug/logger": "1.0.0",
+    "fs": "0.0.1-security",
+    "jsonfile": "6.0.1",
+    "rc": "^1.2.8",
+    "testrail-api": "^1.3.6"
   },
-  "description": "boiler plate for nodejs projects",
-  "homepage": "https://github.com/thomasashwindsilva/boilerplatejs#readme",
+  "description": "node module that can be used to upload test execution log to test rail using test rail-api",
+  "homepage": "https://github.com/node-bug/testrail-uploader#readme",
   "keywords": [
-    "node",
-    "npm",
-    "boiler",
-    "plate"
+    "test",
+    "testrail",
+    "upload",
+    "cucumber",
+    "log",
+    "results"
   ],
   "license": "MPL-2.0",
-  "name": "boilerplatejs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thomasashwindsilva/boilerplatejs.git"
+    "url": "git+https://github.com/node-bug/testrail-uploader.git"
   },
   "scripts": {
     "test": "npm run test"

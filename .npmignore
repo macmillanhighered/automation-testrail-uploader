@@ -1,8 +1,10 @@
+.config
 .vscode
+logs
 node_modules
+reports
 .eslintrc
 .gitignore
 .npmignore
 .prettierrc
 package-lock.json
-logs

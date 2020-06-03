@@ -1,0 +1,64 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "User with/without graphing permission",
+    "line": 2,
+    "id": "user-with/without-graphing-permission",
+    "tags": [
+      { "name": "@math", "line": 1 },
+      { "name": "@graph", "line": 1 },
+      { "name": "@graph-permit", "line": 1 },
+      { "name": "@smoke", "line": 1 }
+    ],
+    "uri": "features/MATH/tests/graphing/graphs-permit.feature",
+    "elements": [
+      {
+        "id": "user-with/without-graphing-permission;user-with-graphing-permission-have-access-to-graphs",
+        "keyword": "Scenario",
+        "line": 5,
+        "name": "User with graphing permission have access to Graphs",
+        "tags": [
+          { "name": "@math", "line": 1 },
+          { "name": "@graph", "line": 1 },
+          { "name": "@graph-permit", "line": 1 },
+          { "name": "@smoke", "line": 1 },
+          { "name": "@Simple", "line": 4 }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "I login to AMS as \"all-permissions-author\"",
+            "match": { "location": "features/shared/steps/login.js:10" },
+            "result": { "status": "passed", "duration": 26955000000 }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "I verify the new Graphs tab exists",
+            "match": { "location": "features/MATH/steps/graphs.js:162" },
+            "result": { "status": "passed", "duration": 2790000000 }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": { "location": "features/support/hooks.js:216" },
+            "result": { "status": "passed", "duration": 44000000 }
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "Browser": "CHROME",
+      "Browser Version": "83.0.4103.61",
+      "Platform": "MAC OS X",
+      "Environment": "INT",
+      "Stack": "INT",
+      "Grid": "LOCAL",
+      "Date Time": "6-3-2020 21:55:44"
+    }
+  }
+]

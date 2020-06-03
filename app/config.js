@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const root = process.env.PWD
-const appName = require('../package.json').name
+const appName = require('../package.json').name.split('/').pop()
 
 const defaultConfigPath = `${root}/.config/${appName}.json`
 
