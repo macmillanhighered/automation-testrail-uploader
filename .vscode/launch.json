@@ -5,20 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "NPM Cukes",
+      "name": "NoDebug",
       "type": "node",
       "request": "launch",
       "console": "integratedTerminal",
       "program": "${workspaceFolder}/index.js",
       "args": [
-        "features/",
-        "-f",
-        "json:reports/cucumber_report.json",
-        "--tags",
-        "@Simple",
-        "--browser",
-        "chrome",
-        "--stack"
+        "--NoDebug"
       ]
     }
   ]

@@ -1,5 +1,5 @@
 const { log } = require('@nodebug/logger')
-const config = require('./config')
+const config = require('@nodebug/config')('testrail-uploader')
 const api = require('./testrail').testRail()
 
 async function uploadCases(payload, suite) {

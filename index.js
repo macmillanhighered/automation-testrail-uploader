@@ -1,5 +1,5 @@
 const { log } = require('@nodebug/logger')
-const config = require('./app/config')
+const config = require('@nodebug/config')('testrail-uploader')
 const uploader = require('./app/uploader')
 const cuke = require('./app/cucumber')
 

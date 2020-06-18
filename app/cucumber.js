@@ -2,7 +2,7 @@ const { log } = require('@nodebug/logger')
 const fs = require('fs')
 const jsonfile = require('jsonfile')
 const path = require('path')
-const config = require('./config')
+const config = require('@nodebug/config')('testrail-uploader')
 
 function readReport() {
   let retVal
