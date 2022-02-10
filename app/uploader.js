@@ -1,69 +1,98 @@
 const { log } = require('@nodebug/logger')
 const config = require('@nodebug/config')('testrail-uploader')
+const Uploader = require('./testrailapi')
 const api = require('./testrail').testRail()
 
-async function uploadCases(payload, suite) {
+async function uploadCases(payload, project, suite) {
   try {
     await api.setConnection(config.user)
   } catch (e) {
     log.error('Error while connecting to test rail')
-    log.error(e)
+    log.error(JSON.stringify(e))
     throw e
   }
 
   try {
-    Array.from(payload.entries()).forEach(async (p) => {
-      const [project, sections] = p
-      const projectId = (await api.getProjectByName(project)).id
-      const suiteId = (await api.addSuite(projectId, suite)).id
-      Array.from(sections.entries()).forEach(async (s) => {
+    const prject = await api.getProjectByName(project)
+    log.info(`Connected to TestRail Project ${project}`)
+    const sute = await api.addSuite(prject.id, suite)
+    log.info(`Uploading test cases to Suite ${suite}`)
+
+    const cucumberResults = Array.from(payload.entries())
+    /* eslint-disable no-restricted-syntax,no-await-in-loop */
+    for (const p of cucumberResults) {
+      const [, sections] = p
+      const cucumberSections = Array.from(sections.entries())
+      for (const s of cucumberSections) {
         const [section, cases] = s
-        const sectionId = (await api.addSection(projectId, suiteId, section)).id
-        Array.from(cases.entries()).forEach(async (c) => {
+        const sction = await api.addSection(prject.id, sute.id, section)
+        const cucumberCases = Array.from(cases.entries())
+        for (const c of cucumberCases) {
           const [, data] = c
-          api.addCase(projectId, suiteId, sectionId, data.get('caseContent'))
-        })
-      })
-    })
+          await api.addCase(
+            prject.id,
+            sute.id,
+            sction.id,
+            data.get('caseContent'),
+          )
+        }
+      }
+    }
+    /* eslint-disable no-restricted-syntax,no-await-in-loop */
   } catch (e) {
     log.error('Error while uploading test cases to test rail')
-    log.error(e)
+    log.error(JSON.stringify(e))
     throw e
   }
 }
 
-async function uploadResults(payload, suite, run) {
+async function uploadResults(payload, project, suite, plan) {
   try {
     await api.setConnection(config.user)
   } catch (e) {
     log.error('Error while connecting to test rail')
-    log.error(e)
+    log.error(JSON.stringify(e))
     throw e
   }
 
+  const uploader = new Uploader(config)
+
   try {
-    Array.from(payload.entries()).forEach(async (p) => {
-      const [project, sections] = p
-      const projectId = (await api.getProjectByName(project)).id
-      const suiteId = (await api.addSuite(projectId, suite)).id
-      await api.addTestRun(projectId, suiteId, run)
-      const runId = (await api.getTestRunByName(projectId, run)).id
-      Array.from(sections.entries()).forEach(async (s) => {
+    const prject = await api.getProjectByName(project)
+    log.info(`Connected to TestRail Project ${project}`)
+    const pln = await api.addTestPlan(prject.id, plan)
+    log.info(`Fetching Test Plan ${plan}`)
+    const sute = await api.getSuiteByName(prject.id, suite)
+    const run = await api.addPlanEntry(pln.id, sute.id, suite)
+    log.info(`Adding Test Run ${suite}`)
+
+    const cucumberResults = Array.from(payload.entries())
+    /* eslint-disable no-restricted-syntax,no-await-in-loop */
+    for (const p of cucumberResults) {
+      const [, sections] = p
+      const cucumberSections = Array.from(sections.entries())
+      for (const s of cucumberSections) {
         const [section, cases] = s
-        const sectionId = (await api.addSection(projectId, suiteId, section)).id
-        Array.from(cases.entries()).forEach(async (c) => {
+        const sction = await api.getSectionByName(prject.id, sute.id, section)
+        const cucumberCases = Array.from(cases.entries())
+        for (const c of cucumberCases) {
           const [scenario, data] = c
           const caseTitle = (
-            await api.getCaseByName(projectId, suiteId, sectionId, scenario)
+            await api.getCaseByName(prject.id, sute.id, sction.id, scenario)
           ).title
-          const testId = (await api.getTestByName(runId, caseTitle)).id
-          api.addResult(testId, data.get('resultContent'))
-        })
-      })
-    })
+          const test = await api.getTestByName(run.id, caseTitle)
+          const result = await api.addResult(test.id, data.get('resultContent'))
+          await uploader.uploadAttachments(
+            result.body.id,
+            data.get('resultContent').attachments,
+          )
+        }
+      }
+    }
+    /* eslint-enable no-restricted-syntax,no-await-in-loop */
   } catch (e) {
     log.error('Error while uploading test results to test rail')
-    log.error(e)
+    log.error(JSON.stringify(e))
     throw e
   }
 }

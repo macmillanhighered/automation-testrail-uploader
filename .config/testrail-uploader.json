@@ -1,11 +1,12 @@
 {
-  "upload": false,
-  "testSuite": "UI - Automation",
-  "testRun": "Results: UI - Automation",
+  "upload": true,
+  "project": "ASSESSMENT",
+  "testSuite": "0 Achieve SAC - PROD - HomeWork",
+  "testPlan": "v0.0 Scoring Service Achieve SAC - PROD - HomeWork",
   "user": {
     "host": "https://mnv.testrail.com/",
     "user": "thomas.dsilva.contractor@macmillan.com",
-    "password": "TGGrc8fivHIXstF9IBEQ-PcBWUGffb6JLFPj9bbO1"
+    "password": "L5Vkq08xuP9dBUskBQao-jwfDWb1WTxYSq211SEVF"
   },
   "reportPath": "./reports/cucumber_report.json"
 }
